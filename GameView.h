@@ -9,8 +9,8 @@
 
 @interface GameView : NSView {
   @private
-	BoxColor _grid[6][4];
-	uint8_t _currentRow;
+	BoxColor grid[6][4];
+	uint8_t currentRow;
 }
 
 @property (nonatomic, readonly) uint8_t currentRow;

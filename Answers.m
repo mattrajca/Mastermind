@@ -20,17 +20,14 @@
 
 @implementation Answers
 
-#pragma mark -
-#pragma mark Initialization
-
 - (id)init {
-    self = [super init];
-    if (self) {
-        srandom(time(NULL));
+	self = [super init];
+	if (self) {
+		srandom(time(NULL));
 		
 		[self generateColors];
-    }
-    return self;
+	}
+	return self;
 }
 
 #pragma mark -
@@ -38,15 +35,15 @@
 
 - (void)generateColors {
 	for (uint8_t i = 0; i < kColorsInRow; i++) {
-		_colors[i] = [self colorForIndex:i];
+		colors[i] = [self colorForIndex:i];
 	}
 }
 
-- (void)getHints:(Hint *)hints forColors:(BoxColor *)colors {
+- (void)getHints:(Hint *)hints forColors:(BoxColor *)sColors {
 	for (uint8_t i = 0; i < kColorsInRow; i++) {
-		BoxColor color = colors[i];
+		BoxColor color = sColors[i];
 		
-		if (_colors[i] == color) {
+		if (colors[i] == color) {
 			hints[i] = HintRight;
 		}
 		else if ([self containsColor:color]) {
@@ -67,17 +64,14 @@
 		else if (a1 > a2) {
 			return 1;
 		}
-
+		
 		return -1;
 	});
 }
 
-#pragma mark -
-#pragma mark Helpers
-
 - (BOOL)previousIndiciesContain:(BoxColor)color toIndex:(uint8_t)index {
 	for (uint8_t i = 0; i < index; i++) {
-		if (_colors[i] == color)
+		if (colors[i] == color)
 			return YES;
 	}
 	
@@ -97,13 +91,11 @@
 
 - (BOOL)containsColor:(BoxColor)color {
 	for (uint8_t i = 0; i < kColorsInRow; i++) {
-		if (_colors[i] == color)
+		if (colors[i] == color)
 			return YES;
 	}
 	
 	return NO;
 }
-
-#pragma mark -
 
 @end

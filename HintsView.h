@@ -9,11 +9,11 @@
 
 @interface HintsView : NSView {
   @private
-	Hint _hints[6][4];
-	uint8_t _currentRow;
+	Hint hints[6][4];
+	uint8_t currentRow;
 }
 
-- (void)markHints:(Hint *)hints;
+- (void)markHints:(Hint *)sHints;
 
 - (void)clear;
 

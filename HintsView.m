@@ -18,9 +18,6 @@
 
 @implementation HintsView
 
-#pragma mark -
-#pragma mark Drawing
-
 - (void)drawRect:(NSRect)dirtyRect {
 	[[NSColor reallyLightGreyColor] set];
 	NSRectFill(dirtyRect);
@@ -28,7 +25,7 @@
 	for (uint8_t row = 0; row < kRows; row++) {
 		for (uint8_t y = 0; y < kHintsInRow; y++) {
 			for (uint8_t x = 0; x < kHintsInRow; x++) {
-				Hint hint = _hints[row][x + y * kHintsInRow];
+				Hint hint = hints[row][x + y * kHintsInRow];
 				
 				[[self colorForHint:hint] set];
 				
@@ -60,30 +57,24 @@
 	NSFrameRect([self bounds]);
 }
 
-#pragma mark -
-#pragma mark Actions
-
-- (void)markHints:(Hint *)hints {
+- (void)markHints:(Hint *)sHints {
 	for (uint8_t i = 0; i < kColorsInRow; i++) {
-		_hints[_currentRow][i] = hints[i];
+		hints[currentRow][i] = sHints[i];
 	}
 	
-	[self setNeedsDisplayInRect:RectForHintRow(_currentRow)];
+	[self setNeedsDisplayInRect:RectForHintRow(currentRow)];
 	
-	_currentRow++;
+	currentRow++;
 	
-	[self setNeedsDisplayInRect:RectForHintRow(_currentRow)];
+	[self setNeedsDisplayInRect:RectForHintRow(currentRow)];
 }
 
 - (void)clear {
-	bzero(_hints, sizeof(Hint) * kRows * kColorsInRow);
-	_currentRow = 0;
+	bzero(hints, sizeof(Hint) * kRows * kColorsInRow);
+	currentRow = 0;
 	
 	[self setNeedsDisplay:YES];
 }
-
-#pragma mark -
-#pragma mark Helpers
 
 - (NSColor *)colorForHint:(Hint)hint {
 	if (hint == HintRight) {
@@ -95,7 +86,5 @@
 	
 	return [NSColor clearColor];
 }
-
-#pragma mark -
 
 @end

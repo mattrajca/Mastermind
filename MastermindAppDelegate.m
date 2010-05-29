@@ -21,34 +21,26 @@
 
 @implementation MastermindAppDelegate
 
-@synthesize window = _window;
-@synthesize gameView = _gameView;
-@synthesize hintsView = _hintsView;
-
-#pragma mark -
-#pragma mark Initialization
+@synthesize window, gameView, hintsView;
 
 - (id)init {
 	self = [super init];
 	if (self) {
-		_answers = [[Answers alloc] init];
+		answers = [[Answers alloc] init];
 	}
 	return self;
 }
 
-#pragma mark -
-#pragma mark Actions
-
 - (IBAction)newGame:(id)sender {
-	[_answers generateColors];
-	[_gameView clear];
-	[_hintsView clear];
+	[answers generateColors];
+	[gameView clear];
+	[hintsView clear];
 }
 
 - (IBAction)checkRow:(id)sender {
-	if ([_gameView checkRow]) {
-		if (_gameView.currentRow + 1 == kRows) {
-			NSBeginAlertSheet(@"Game over!", @"New Game", @"Quit", nil, _window, self, NULL,
+	if ([gameView checkRow]) {
+		if (gameView.currentRow + 1 == kRows) {
+			NSBeginAlertSheet(@"Game over!", @"New Game", @"Quit", nil, window, self, NULL,
 							  @selector(sheetDidDismiss:returnCode:contextInfo:), NULL,
 							  @"You ran out of rows!");
 			
@@ -56,41 +48,35 @@
 		}
 		
 		BoxColor colors[kColorsInRow];
-		[_gameView getColorsFromCurrentRow:colors];
+		[gameView getColorsFromCurrentRow:colors];
 		
 		Hint hints[kColorsInRow];
-		[_answers getHints:hints forColors:colors];
+		[answers getHints:hints forColors:colors];
 		
-		[_hintsView markHints:hints];
+		[hintsView markHints:hints];
 		
 		if ([self isSolvedWithHints:hints]) {
-			NSBeginAlertSheet(@"Congratulations!", @"New Game", @"Quit", nil, _window, self, NULL,
+			NSBeginAlertSheet(@"Congratulations!", @"New Game", @"Quit", nil, window, self, NULL,
 							  @selector(sheetDidDismiss:returnCode:contextInfo:), NULL,
 							  @"You have solved the puzzle!");
 			
 			return;
 		}
 		
-		[_gameView moveToNextRow];
+		[gameView moveToNextRow];
 	}
 	else {
-		NSBeginAlertSheet(@"Whoa!", @"OK", nil, nil, _window, nil, NULL, NULL, NULL, @"Invalid color combination");
+		NSBeginAlertSheet(@"Whoa!", @"OK", nil, nil, window, nil, NULL, NULL, NULL, @"Invalid color combination");
 	}
 }
-
-#pragma mark -
-#pragma mark App Delegate
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
 	return YES;
 }
 
-#pragma mark -
-#pragma mark Helpers
-
 - (void)sheetDidDismiss:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSAlertAlternateReturn) {
-		[_window close];
+		[window close];
 	}
 	else {
 		[self newGame:nil];
@@ -105,7 +91,5 @@
 	
 	return YES;
 }
-
-#pragma mark -
 
 @end

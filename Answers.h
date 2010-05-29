@@ -9,11 +9,11 @@
 
 @interface Answers : NSObject {
   @private
-	BoxColor _colors[4];
+	BoxColor colors[4];
 }
 
 - (void)generateColors;
 
-- (void)getHints:(Hint *)hints forColors:(BoxColor *)colors;
+- (void)getHints:(Hint *)hints forColors:(BoxColor *)sColors;
 
 @end

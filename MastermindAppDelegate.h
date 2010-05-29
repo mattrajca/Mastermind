@@ -9,10 +9,10 @@
 
 @interface MastermindAppDelegate : NSObject < NSApplicationDelegate > {
   @private
-    NSWindow *_window;
-	GameView *_gameView;
-	HintsView *_hintsView;
-	Answers *_answers;
+	NSWindow *window;
+	GameView *gameView;
+	HintsView *hintsView;
+	Answers *answers;
 }
 
 @property (nonatomic, assign) IBOutlet NSWindow *window;
