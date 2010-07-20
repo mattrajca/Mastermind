@@ -29,7 +29,6 @@ typedef enum {
 	HintWrongColor
 } Hint;
 
-extern NSRect RectForBox (uint8_t row, uint8_t col);
-extern NSRect RectForRow (uint8_t row);
-
-extern NSRect RectForHintRow (uint8_t row);
+NSRect RectForBox (uint8_t row, uint8_t col);
+NSRect RectForRow (uint8_t row);
+NSRect RectForHintRow (uint8_t row);
